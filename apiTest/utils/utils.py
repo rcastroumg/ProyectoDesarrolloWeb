@@ -2,7 +2,7 @@ import jwt
 import os
 from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordBearer
-from models import UserInDB, fake_users_db
+from models.models import UserInDB, fake_users_db
 from datetime import datetime, timedelta
 from fastapi import Depends, HTTPException, status
 from dotenv import load_dotenv

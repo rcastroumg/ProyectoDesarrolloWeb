@@ -2,9 +2,9 @@ from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 
 
-from models import Token, User, fake_users_db
+from models.models import Token, User, fake_users_db
 
-from utils import authenticate_user, create_access_token, get_current_user
+from utils.utils import authenticate_user, create_access_token, get_current_user
 
 
 app = FastAPI()
