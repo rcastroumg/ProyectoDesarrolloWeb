@@ -1,0 +1,18 @@
+<div id="fullscreen_bg" class="fullscreen_bg">
+    <div class="container">
+        @if(!loggedIn){
+        <div>
+            <!-- <button (click)="signInWithGoogle()">Login with Google</button> -->
+            <asl-google-signin-button type="standard" shape="pill" theme="filled_blue" text="signin_with" size="large"
+                logo_alignment="left">Login with Google</asl-google-signin-button>
+        </div>
+        }
+        @if(loggedIn){
+        <div>
+            <p>Welcome, {{ user?.name }}!</p>
+            <button (click)="signOut()">Logout</button>
+        </div>
+        }
+
+    </div>
+</div>
