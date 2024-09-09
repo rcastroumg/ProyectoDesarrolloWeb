@@ -1,13 +1,17 @@
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
+import routers
 
+from models.models import User, fake_users_db
+from schemas.userSchema import Token
 
-from models.models import Token, User, fake_users_db
-
+import routers.users
 from utils.utils import authenticate_user, create_access_token, get_current_user
 
 
 app = FastAPI()
+
+app.include_router(routers.users.router)
 
 
 # Ruta para obtener el token
