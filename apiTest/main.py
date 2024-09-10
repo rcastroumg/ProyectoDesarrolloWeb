@@ -8,10 +8,31 @@ from schemas.userSchema import Token
 import routers.users
 from utils.utils import authenticate_user, create_access_token, get_current_user
 
+from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
 
 app.include_router(routers.users.router)
+
+origins = [
+    "http://localhost",
+    "http://localhost:8888",
+    "http://localhost:8080",
+    "http://localhost:4200",
+    "http://localhost:80",
+    "http://nomina.robcastgt.com",
+    "http://34.71.87.248:80",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    #allow_origins=origins,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 # Ruta para obtener el token

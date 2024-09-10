@@ -48,15 +48,28 @@ export class LoginComponent {
       this._router.navigate(['home']);
     }
     this._socialAuthService.authState.subscribe((user) => {
-      console.log(user);
-
       this.user = user;
+
+      this._authService.info_token(this.user.idToken).subscribe(inftoken => {
+        this._authService.login(this.user!.email).then(datos => {
+          console.log(datos);
+          console.log(inftoken);
+          //this._authService.cargar_parfil(datos[1].email,inftoken["family_name"])
+        });
+      })
+
+      /* console.log(user);
+
       this.loggedIn = (user != null);
       this._authService.login(this.user.email);
       this._router.navigate(['home']);
 
-      this._authService.saveStorage(this.loggedIn);
+      this._authService.saveStorage(this.loggedIn); */
     });
+  }
+
+  signInInstaFake(){
+
   }
 
   signInWithGoogle(): void {
