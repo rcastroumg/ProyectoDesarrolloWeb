@@ -44,18 +44,29 @@ export class LoginComponent {
     this._authService.loadStorage();
     console.log(this._authService.loggedId);
 
-    if (this._authService.loggedId) {
-      this._router.navigate(['home']);
+    if (this._authService.perfil.email) {
+      const redirect = this._authService.redirectUrl ? this._authService.redirectUrl : 'home';
+      this._router.navigate([redirect]);
     }
     this._socialAuthService.authState.subscribe((user) => {
       this.user = user;
 
       this._authService.info_token(this.user.idToken).subscribe(inftoken => {
-        this._authService.login(this.user!.email).then(datos => {
-          console.log(datos);
-          console.log(inftoken);
-          //this._authService.cargar_parfil(datos[1].email,inftoken["family_name"])
-        });
+        let inftokenObj = inftoken as { picture: string, name: string, family_name: string, given_name: string, email: string }
+        this._authService.login(this.user!.email)
+          .then(datos => {
+            console.log(datos);
+            console.log(inftoken);
+            this._authService.cargar_parfil(datos[1].email, inftokenObj.given_name, inftokenObj.family_name, (datos[1].foto ? datos[1].foto : inftokenObj.picture), datos[0]);
+            this._authService.saveStorage();
+            this._router.navigate(['home']);
+          })
+          .catch(error => {
+            if (error.status == 401) {
+              this._router.navigate(['register']);
+            }
+
+          });
       })
 
       /* console.log(user);
@@ -68,7 +79,7 @@ export class LoginComponent {
     });
   }
 
-  signInInstaFake(){
+  signInInstaFake() {
 
   }
 

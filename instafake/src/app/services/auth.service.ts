@@ -13,8 +13,10 @@ export class AuthService {
   perfil = Perfil
   token = "";
   loggedId: boolean = false;
+  redirectUrl: string = "";
+
   constructor(
-    public http: HttpClient, 
+    public http: HttpClient,
   ) { }
 
   isAuth() {
@@ -27,22 +29,22 @@ export class AuthService {
 
     this.token = idUsuario;
     this.loggedId = true; */
-    let user:any;
+    let user: any;
 
     let url = `${this.basepath}User/token`;
 
     let data = new FormData();
-    data.append("username",email);
-    data.append("password","");
+    data.append("username", email);
+    data.append("password", "");
 
-    const getToken = this.http.post(url,data)
-    .pipe(
-      map(res=>JSON.stringify(res))
-    );
+    const getToken = this.http.post(url, data)
+      .pipe(
+        map(res => JSON.stringify(res))
+      );
 
     await lastValueFrom(getToken).then(resp => {
-      let mytoken = JSON.parse(resp) as {access_token:string,token_type:string}
-      this.token = mytoken["access_token"];      
+      let mytoken = JSON.parse(resp) as { access_token: string, token_type: string }
+      this.token = mytoken["access_token"];
     });
 
     console.log(this.token);
@@ -52,26 +54,26 @@ export class AuthService {
 
     let headers = new HttpHeaders();
     //headers.set("accept","application/json");
-    headers = headers.set("Authorization","Bearer "+this.token);
-    
+    headers = headers.set("Authorization", "Bearer " + this.token);
 
-    const getUser = this.http.get(url,{headers: headers})
-    .pipe(
-      map(res=>JSON.stringify(res))
-    );
+
+    const getUser = this.http.get(url, { headers: headers })
+      .pipe(
+        map(res => JSON.stringify(res))
+      );
 
     await lastValueFrom(getUser).then(resp => {
-      let myuser = JSON.parse(resp) as {id:number, username:string,email:string,profile_picture:string}
-      user = myuser;            
+      let myuser = JSON.parse(resp) as { id: number, username: string, email: string, profile_picture: string }
+      user = myuser;
     });
 
-    return [this.token,user];
+    return [this.token, user];
 
   }
 
   info_token(token: string) {
     let url = "";
-    url = `https://oauth2.googleapis.com/tokeninfo?id_token=${ token }`;
+    url = `https://oauth2.googleapis.com/tokeninfo?id_token=${token}`;
 
     return this.http.get(url)
       .pipe(
@@ -94,22 +96,32 @@ export class AuthService {
     this.perfil.nombres = nombres;
     this.perfil.apellidos = apellidos;
     this.perfil.foto = foto;
+    this.token = token;
   }
 
 
-  saveStorage(loggedIn: boolean) {
-    if (loggedIn) {
-      localStorage.setItem('loggedIn', 'true');
+  saveStorage() {
+    if (this.perfil.email) {
+      localStorage.setItem('token', this.token);
+      localStorage.setItem('email', this.perfil.email);
+      localStorage.setItem('nombres', this.perfil.nombres);
+      localStorage.setItem('apellido', this.perfil.apellidos);
+      localStorage.setItem('foto', this.perfil.foto);
     }
     else {
-      localStorage.removeItem('loggedIn');
+      localStorage.removeItem('token');
+      localStorage.removeItem('email');
+      localStorage.removeItem('nombres');
+      localStorage.removeItem('apellido');
+      localStorage.removeItem('foto');
     }
   }
 
   loadStorage() {
-    if (localStorage.getItem('loggedIn')) {
-      this.loggedId = true;
-      this.token = "log"
-    }
+    if (localStorage.getItem('token')) { this.token = localStorage.getItem('token')!; this.loggedId = true }
+    if (localStorage.getItem('nombres')) this.perfil.nombres = localStorage.getItem('nombres')!;
+    if (localStorage.getItem('apellidos')) this.perfil.apellidos = localStorage.getItem('apellidos')!;
+    if (localStorage.getItem('email')) this.perfil.email = localStorage.getItem('email')!;
+    if (localStorage.getItem('foto')) this.perfil.foto = localStorage.getItem('foto')!;
   }
 }
