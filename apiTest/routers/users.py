@@ -9,10 +9,6 @@ router = APIRouter(
     tags=["Users"]
 )
 
-@router.get("/me", response_model=User)
-async def read_users_me(current_user: User = Depends(get_current_user)):
-    return current_user
-
 
 # Ruta para obtener el token
 @router.post("/token", response_model=Token)
@@ -31,3 +27,22 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
         data={"sub": user.email}
     )
     return {"access_token": access_token, "token_type": "bearer"}
+
+
+@router.get("/me", response_model=User)
+async def read_users_me(current_user: User = Depends(get_current_user)):
+    return current_user
+
+
+@router.get("/mydata")
+async def read_users_me(current_user: User = Depends(get_current_user)):
+    posts = UserModel.getPosts(current_user.id)
+    followers = UserModel.getFollowers(current_user.id)
+    following = UserModel.getFollowing(current_user.id)
+
+    data = {
+        "posts": posts,
+        "followers": followers,
+        "following": following
+    }
+    return data

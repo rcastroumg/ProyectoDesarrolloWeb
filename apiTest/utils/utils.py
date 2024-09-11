@@ -12,7 +12,7 @@ load_dotenv()
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 ALGORITHM = os.getenv('ALGORITHM')
-ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv('ACCESS_TOKEN_EXPIRE_MINUTES'))
+ACCESS_TOKEN_EXPIRE_DAYS = int(os.getenv('ACCESS_TOKEN_EXPIRE_DAYS'))
 
 
 # Contexto de seguridad para manejar el hash de contraseñas
@@ -42,8 +42,8 @@ def authenticate_user(fake_db, username: str, password: str):
 # Crear el token JWT
 def create_access_token(data: dict, expires_delta: timedelta | None = None):
     to_encode = data.copy()
-    print(ACCESS_TOKEN_EXPIRE_MINUTES)
-    expires_delta = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    print(ACCESS_TOKEN_EXPIRE_DAYS)
+    expires_delta = timedelta(minutes=ACCESS_TOKEN_EXPIRE_DAYS)
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
     else:
@@ -65,7 +65,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
         #print("aqui va")
         print(payload)
         exptime = payload.get("exp")
-        print(datetime.utcnow()+timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
+        print(datetime.utcnow()+timedelta(minutes=ACCESS_TOKEN_EXPIRE_DAYS))
         #print(datetime.strptime(str(exptime), "%H:%M:%S"))
         username: str = payload.get("sub")
         if username is None:

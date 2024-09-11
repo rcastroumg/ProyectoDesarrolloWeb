@@ -1,1 +1,19 @@
-<p>profile works!</p>
+<div class="container">
+    <header>
+        <div class="section1">
+            <div style="width: 130px; height: 130px;">
+                <img [src]="this._authService.perfil.foto" alt="">
+            </div>
+        </div>
+        <div class="section2">
+            <div class="email">{{this._authService.perfil.email}}</div>
+            <div class="infoData">
+                <div>{{this._userService.myData.posts.length}} Publicaciones</div>
+                <div>{{this._userService.myData.followers.length}} Seguidores</div>
+                <div>{{this._userService.myData.following.length}} Seguidos</div>
+            </div>
+            <div class="username">{{this._authService.perfil.nombres}} {{this._authService.perfil.apellidos}}</div>            
+        </div>
+    </header>
+
+</div>

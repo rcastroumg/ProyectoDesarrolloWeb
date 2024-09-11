@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -9,4 +11,13 @@ import { Component } from '@angular/core';
 })
 export class ProfileComponent {
 
+    constructor(
+      public _authService: AuthService,
+      public _userService: UserService
+    ){
+    }
+
+    onOnInit(){
+
+    }
 }
