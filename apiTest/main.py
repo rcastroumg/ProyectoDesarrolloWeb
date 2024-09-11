@@ -55,3 +55,8 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
 @app.get("/users/me", response_model=User)
 async def read_users_me(current_user: User = Depends(get_current_user)):
     return current_user
+
+
+# Para debug
+#if __name__ == "__main__":
+#    uvicorn.run(app,host="0.0.0.0",port=8095)
