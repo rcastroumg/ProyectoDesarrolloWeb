@@ -1,18 +1,22 @@
 <div id="fullscreen_bg" class="fullscreen_bg">
     <div class="container">
-        @if(!loggedIn){
-        <div>
+        <div class="main_content">
             <!-- <button (click)="signInWithGoogle()">Login with Google</button> -->
-            <asl-google-signin-button type="standard" shape="pill" theme="filled_blue" text="signin_with" size="large"
-                logo_alignment="left">Login with Google</asl-google-signin-button>
+             <div class="cover">
+                <img [src]="'./assets/imgs/instafake_logo.png'" alt="">
+             </div>
+             <div class="login">
+                 <asl-google-signin-button type="standard" shape="pill" theme="filled_blue" text="signin_with" size="large"
+                     logo_alignment="left">Login with Google</asl-google-signin-button>
+             </div>
         </div>
-        }
-        @if(loggedIn){
+        
+        <!-- @if(loggedIn){
         <div>
             <p>Welcome, {{ user?.name }}!</p>
             <button (click)="signOut()">Logout</button>
         </div>
-        }
+        } -->
 
     </div>
 </div>

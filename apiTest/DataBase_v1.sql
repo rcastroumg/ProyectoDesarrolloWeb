@@ -53,3 +53,17 @@ CREATE TABLE Followers (
     FOREIGN KEY (follower_id) REFERENCES Users(id) ON DELETE CASCADE,
     FOREIGN KEY (following_id) REFERENCES Users(id) ON DELETE CASCADE
 );
+
+
+-- Tabla de archivos
+CREATE TABLE Files (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    file_name VARCHAR(100) NOT NULL,
+    size INT NOT NULL,
+    type_content VARCHAR(30) NOT NULL,
+    route VARCHAR(50) NOT NULL,
+    ext VARCHAR(10) NOT NULL,
+    user_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE RESTRICT
+)

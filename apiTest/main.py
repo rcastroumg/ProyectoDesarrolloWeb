@@ -1,11 +1,13 @@
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
+import uvicorn
 import routers
 
 from models.models import User, fake_users_db
 from schemas.userSchema import Token
 
 import routers.users
+import routers.dg
 from utils.utils import authenticate_user, create_access_token, get_current_user
 
 from fastapi.middleware.cors import CORSMiddleware
@@ -14,15 +16,11 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 app.include_router(routers.users.router)
+app.include_router(routers.dg.router)
 
 origins = [
     "http://localhost",
-    "http://localhost:8888",
-    "http://localhost:8080",
-    "http://localhost:4200",
-    "http://localhost:80",
-    "http://nomina.robcastgt.com",
-    "http://34.71.87.248:80",
+    "http://localhost:8095",
 ]
 
 app.add_middleware(
@@ -58,5 +56,5 @@ async def read_users_me(current_user: User = Depends(get_current_user)):
 
 
 # Para debug
-#if __name__ == "__main__":
-#    uvicorn.run(app,host="0.0.0.0",port=8095)
+if __name__ == "__main__":
+    uvicorn.run(app,host="0.0.0.0",port=8095)

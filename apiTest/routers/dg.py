@@ -2,7 +2,9 @@ import base64
 from fastapi import APIRouter, Depends, HTTPException, status
 
 from schemas.dgSchema import GuardarArchivo
-from utils import dgUtil
+from schemas.userSchema import User
+from utils.dgUtil import DgUtil
+from utils.userUtil import get_current_user
 
 router = APIRouter(
     prefix="/Files",
@@ -10,7 +12,7 @@ router = APIRouter(
 )
 
 @router.post("/save")
-async def saveFile(model:GuardarArchivo):
+async def saveFile(model:GuardarArchivo,current_user: User = Depends(get_current_user)):
     IDArchivo:int = 0
     try:
         content:bytes = []
@@ -23,7 +25,7 @@ async def saveFile(model:GuardarArchivo):
             #string is not UTF-8
             content = model.Contenido
 
-        IDArchivo = dgUtil.guardarArcihvo(NombreArchivo=model.NombreArchivo, TipoContenido=model.TipoContenido, Contenido=content, Usuario=model.Usuario)
+        IDArchivo = DgUtil.guardarArcihvo(NombreArchivo=model.NombreArchivo, TipoContenido=model.TipoContenido, Contenido=content, Usuario=current_user)
         return IDArchivo
     except:
         return HTTPException(status.HTTP_400_BAD_REQUEST,detail="No se pudo guardar el archivo")
