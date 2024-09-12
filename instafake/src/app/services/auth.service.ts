@@ -71,6 +71,12 @@ export class AuthService {
 
   }
 
+  logout() {
+    this.limpiar_perfil();
+    this.saveStorage();
+    this.loggedId = false;
+  }
+
   info_token(token: string) {
     let url = "";
     url = `https://oauth2.googleapis.com/tokeninfo?id_token=${token}`;
@@ -99,9 +105,17 @@ export class AuthService {
     this.token = token;
   }
 
+  limpiar_perfil() {
+    this.perfil.nombres = "";
+    this.perfil.apellidos = "";
+    this.perfil.email = "";
+    this.perfil.foto = "";
+    this.token = "";
+  }
+
 
   saveStorage() {
-    if (this.perfil.email) {
+    if (this.token) {
       localStorage.setItem('token', this.token);
       localStorage.setItem('email', this.perfil.email);
       localStorage.setItem('nombres', this.perfil.nombres);

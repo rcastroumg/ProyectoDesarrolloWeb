@@ -12,8 +12,13 @@
                 <div>{{this._userService.myData.followers.length}} Seguidores</div>
                 <div>{{this._userService.myData.following.length}} Seguidos</div>
             </div>
-            <div class="username">{{this._authService.perfil.nombres}} {{this._authService.perfil.apellidos}}</div>            
+            <div class="username">{{this._authService.perfil.nombres}} {{this._authService.perfil.apellidos}}</div>
         </div>
     </header>
-
+    <div class="options">
+        <a href="/profile">
+            <i class="fas fa-th"></i>
+            <span>Publicaciones</span>
+        </a>
+    </div>
 </div>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -12,9 +12,15 @@ import { AuthService } from '../../services/auth.service';
 export class SidebarComponent {
 
   constructor(
-    public _authService:AuthService
-  ){
+    public _authService: AuthService,
+    private _router: Router
+  ) {
 
+  }
+
+  signOut() {
+    this._authService.logout();
+    this._router.navigate(["login"]);
   }
 
 }
