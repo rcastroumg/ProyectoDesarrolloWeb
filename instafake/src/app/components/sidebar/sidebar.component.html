@@ -10,18 +10,18 @@
             <i class="fas fa-home"></i>
             <span>Inicio</span>
         </a>
-        <a href="#" class="sidebar-item">
+        <div class="sidebar-item disabled">
             <i class="fas fa-search"></i>
             <span>Buscar</span>
-        </a>
-        <a href="#" class="sidebar-item">
+        </div>
+        <a href="/newpost" class="sidebar-item">
             <i class="fas fa-plus-square"></i>
             <span>Nueva publicación</span>
         </a>
-        <a href="#" class="sidebar-item">
+        <div class="sidebar-item disabled">
             <i class="fas fa-heart"></i>
             <span>Notificaciones</span>
-        </a>
+        </div>
         <a href="/profile" class="sidebar-item">
             <img [src]="this._authService.perfil.foto" alt="">
             <span>Perfil</span>

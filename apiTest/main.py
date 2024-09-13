@@ -8,6 +8,7 @@ from schemas.userSchema import Token
 
 import routers.users
 import routers.dg
+import routers.tmp
 from utils.utils import authenticate_user, create_access_token, get_current_user
 
 from fastapi.middleware.cors import CORSMiddleware
@@ -16,7 +17,8 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 app.include_router(routers.users.router)
-app.include_router(routers.dg.router)
+app.include_router (routers.dg.router)
+app.include_router (routers.tmp.router)
 
 origins = [
     "http://localhost",

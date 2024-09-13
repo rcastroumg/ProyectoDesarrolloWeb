@@ -56,15 +56,10 @@ class DgUtil:
 
             IDArchivo:int        
 
-            FilesModel.guardarArchivo(model)
-            files = FilesModel.getLastFile()
-            file = 0
-
-            if(len(file) > 0):
-                IDArchivo = files[0]["id"]
+            IDArchivo = FilesModel.guardarArchivo(model)
             
             # Arma la ruta final segun sistema operativo o almacenamiento
-            guardar = DgUtil.guardarArchivoFisico(IDArchivo,ruta,extencion_archivo,Contenido,TipoContenido,NombreArchivo)
+            guardar = DgUtil.guardarArchivoFisico(IDArchivo,ruta,extencion_archivo,Contenido)
             if(guardar == False):
                 raise Exception("Error al guardar archivo")              
 
@@ -85,8 +80,7 @@ class DgUtil:
                 path.mkdir(parents=True,exist_ok=True) 
                 path = path / file_name_fisic
             elif aws == True:
-                archivo_ruta = ruta[3:]
-                path = archivo_ruta.replace("\\","/")                
+                path = ruta.replace("\\","/")                
                 path = path + "/" + file_name_fisic
             else: 
                 path = Path(path)

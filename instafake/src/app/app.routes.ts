@@ -7,6 +7,7 @@ import { NotfoundComponent } from './components/notfound/notfound.component';
 import { RegisterComponent } from './components/register/register.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { NewpostComponent } from './components/newpost/newpost.component';
 
 export const routes: Routes = [
     {
@@ -26,6 +27,10 @@ export const routes: Routes = [
             {
                 path: 'profile',
                 component: ProfileComponent
+            },
+            {
+                path: 'newpost',
+                component: NewpostComponent
             },
         ]
     },

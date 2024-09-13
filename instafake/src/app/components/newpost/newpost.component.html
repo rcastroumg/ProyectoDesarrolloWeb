@@ -1,0 +1,17 @@
+<div class="container">
+    <h2>Angular 18 Template-Based Contact Form Example</h2>
+
+    <form #myform="ngForm" (ngSubmit)="onSubmit(myform)">
+        <div class="mb-3">
+            <label for="Comentario" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="Comentario" aria-describedby="emailHelp" ngModel>
+            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        </div>
+
+        <input type="email" name="email" placeholder="Your email" ngModel />
+
+        <textarea name="message" placeholder="Your message" ngModel></textarea>
+
+        <input type="submit" value="Send" />
+    </form>
+</div>

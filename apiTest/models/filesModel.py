@@ -13,7 +13,7 @@ class FilesModel:
             {"nombre":"user_id","valor":model.user_id,}
         ]
         query = f"""
-insert into File
+insert into Files
 (
     file_name,
     size,
