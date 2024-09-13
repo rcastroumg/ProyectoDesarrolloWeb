@@ -57,7 +57,7 @@ export class LoginComponent {
           .then(datos => {
             console.log(datos);
             console.log(inftoken);
-            this._authService.cargar_parfil(datos[1].email, inftokenObj.given_name, inftokenObj.family_name, (datos[1].foto ? datos[1].foto : inftokenObj.picture), datos[0]);
+            this._authService.cargar_parfil(datos[1].email, inftokenObj.given_name, inftokenObj.family_name, datos[1].username, (datos[1].foto ? datos[1].foto : inftokenObj.picture), datos[0]);
             this._authService.saveStorage();
             this._router.navigate(['home']);
           })

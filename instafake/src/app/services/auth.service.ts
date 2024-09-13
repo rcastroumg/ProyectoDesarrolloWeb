@@ -65,6 +65,8 @@ export class AuthService {
     await lastValueFrom(getUser).then(resp => {
       let myuser = JSON.parse(resp) as { id: number, username: string, email: string, profile_picture: string }
       user = myuser;
+      console.log(user);
+      
     });
 
     return [this.token, user];
@@ -94,6 +96,7 @@ export class AuthService {
     email: string,
     nombres: string,
     apellidos: string,
+    nombre_completo: string,
     foto: string,
     token: string
   ) {
@@ -101,6 +104,7 @@ export class AuthService {
     this.perfil.email = email;
     this.perfil.nombres = nombres;
     this.perfil.apellidos = apellidos;
+    this.perfil.nombre_completo = nombre_completo;
     this.perfil.foto = foto;
     this.token = token;
   }
@@ -120,6 +124,7 @@ export class AuthService {
       localStorage.setItem('email', this.perfil.email);
       localStorage.setItem('nombres', this.perfil.nombres);
       localStorage.setItem('apellido', this.perfil.apellidos);
+      localStorage.setItem('nombreCompleto', this.perfil.nombre_completo);
       localStorage.setItem('foto', this.perfil.foto);
     }
     else {
@@ -127,6 +132,7 @@ export class AuthService {
       localStorage.removeItem('email');
       localStorage.removeItem('nombres');
       localStorage.removeItem('apellido');
+      localStorage.removeItem('nombreCompleto');
       localStorage.removeItem('foto');
     }
   }
@@ -135,6 +141,7 @@ export class AuthService {
     if (localStorage.getItem('token')) { this.token = localStorage.getItem('token')!; this.loggedId = true }
     if (localStorage.getItem('nombres')) this.perfil.nombres = localStorage.getItem('nombres')!;
     if (localStorage.getItem('apellidos')) this.perfil.apellidos = localStorage.getItem('apellidos')!;
+    if (localStorage.getItem('nombreCompleto')) this.perfil.nombre_completo = localStorage.getItem('nombreCompleto')!;
     if (localStorage.getItem('email')) this.perfil.email = localStorage.getItem('email')!;
     if (localStorage.getItem('foto')) this.perfil.foto = localStorage.getItem('foto')!;
   }

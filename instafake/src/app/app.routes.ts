@@ -17,33 +17,33 @@ export const routes: Routes = [
     },
     {
         path: '',
-        component: SidebarComponent,
+        loadComponent: () => import('./components/sidebar/sidebar.component').then(m => m.SidebarComponent),
         canActivate: [authGuard],
         children: [
             {
                 path: 'home',
-                component: HomeComponent
+                loadComponent: ()=>import('./components/home/home.component').then(m=>m.HomeComponent)
             },
             {
                 path: 'profile',
-                component: ProfileComponent
+                loadComponent: () => import('./components/profile/profile.component').then(m => m.ProfileComponent)
             },
             {
                 path: 'newpost',
-                component: NewpostComponent
+                loadComponent: () => import('./components/newpost/newpost.component').then(m => m.NewpostComponent)
             },
         ]
     },
     {
         path: 'login',
-        component: LoginComponent
+        loadComponent: () => import('./components/login/login.component').then(m => m.LoginComponent)
     },
     {
         path: 'register',
-        component: RegisterComponent
+        loadComponent: () => import('./components/register/register.component').then(m => m.RegisterComponent)
     },
     {
         path: '**',
-        component: NotfoundComponent
+        loadComponent: () => import('./components/notfound/notfound.component').then(m => m.NotfoundComponent)
     }
 ];
