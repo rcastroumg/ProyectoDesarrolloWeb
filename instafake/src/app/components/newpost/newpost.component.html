@@ -1,7 +1,7 @@
 <div class="container">
     <h2>Angular 18 Template-Based Contact Form Example</h2>
 
-    <form #myform="ngForm" (ngSubmit)="onSubmit(myform)">
+    <!-- <form #myform="ngForm" (ngSubmit)="onSubmit(myform)">
         <div class="mb-3">
             <label for="Comentario" class="form-label">Email address</label>
             <input type="email" class="form-control" id="Comentario" aria-describedby="emailHelp" ngModel>
@@ -13,5 +13,22 @@
         <textarea name="message" placeholder="Your message" ngModel></textarea>
 
         <input type="submit" value="Send" />
+    </form> -->
+
+    <form class="row g-3" #myform="ngForm" (ngSubmit)="onSubmit(myform)">
+        <div class="form-floating col-12">
+            <textarea class="form-control" placeholder="Leave a comment here" id="comments" name="comment"
+                style="height: 100px" [(ngModel)]="post.comment"></textarea>
+            <label for="comments">Comments</label>
+        </div>
+        <div class="input-group mb-3 col-12">
+            <label class="input-group-text" for="imageFile">Upload</label>
+            <input type="file" class="form-control" id="imageFile" name="imageFile" [(ngModel)]="post.imageFile"
+                (change)="catchFile($event)">
+        </div>
+        <img width="300px" [src]="post.imageB64" alt="">
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Sign in</button>
+        </div>
     </form>
 </div>

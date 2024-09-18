@@ -11,13 +11,15 @@ import { UserService } from '../../services/user.service';
 })
 export class ProfileComponent {
 
-    constructor(
-      public _authService: AuthService,
-      public _userService: UserService
-    ){
-    }
+  constructor(
+    public _authService: AuthService,
+    public _userService: UserService
+  ) {
+  }
 
-    onOnInit(){
-      
-    }
+  ngOnInit() {
+    console.log("Entro");
+
+    this._userService.getDataUser();
+  }
 }

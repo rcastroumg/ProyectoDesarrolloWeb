@@ -18,19 +18,18 @@ export class UserService {
   } as UserData;
 
   constructor(
-    private http:HttpClient,
-    private _authService:AuthService
+    private http: HttpClient,
+    private _authService: AuthService
   ) { }
 
-  getDataUser(){
+  getDataUser() {
     let url = `${this.basepath}User/mydata`;
 
     let headers = new HttpHeaders();
-    //headers.set("accept","application/json");
     headers = headers.set("Authorization", "Bearer " + this._authService.token);
 
 
-    this.http.get(url)
+    this.http.get(url, { headers: headers })
       .pipe(
         map(res => JSON.stringify(res))
       )

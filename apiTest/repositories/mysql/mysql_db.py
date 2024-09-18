@@ -59,6 +59,7 @@ class MySqldb:
                ConnectionError: Si ocurre un error al establecer la conexión.
        """
         try:
+            print(self.db_host)
             db_config = {
                 "host":self.db_host,
                 "user":self.db_user,

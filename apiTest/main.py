@@ -9,6 +9,7 @@ from schemas.userSchema import Token
 import routers.users
 import routers.dg
 import routers.tmp
+import routers.posts
 from utils.utils import authenticate_user, create_access_token, get_current_user
 
 from fastapi.middleware.cors import CORSMiddleware
@@ -19,6 +20,7 @@ app = FastAPI()
 app.include_router(routers.users.router)
 app.include_router (routers.dg.router)
 app.include_router (routers.tmp.router)
+app.include_router (routers.posts.router)
 
 origins = [
     "http://localhost",
@@ -58,5 +60,5 @@ async def read_users_me(current_user: User = Depends(get_current_user)):
 
 
 # Para debug
-if __name__ == "__main__":
-    uvicorn.run(app,host="0.0.0.0",port=8095)
+#if __name__ == "__main__":
+#    uvicorn.run(app,host="0.0.0.0",port=8095)

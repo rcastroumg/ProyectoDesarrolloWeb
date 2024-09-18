@@ -75,3 +75,13 @@ header {
         padding-bottom: 15px;
     }
 }
+
+.myposts {
+    display: flex;
+    flex-wrap: wrap;
+
+    img {
+        width: 200px;
+        height: 200px;
+    }
+}

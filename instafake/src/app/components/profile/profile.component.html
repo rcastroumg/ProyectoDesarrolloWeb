@@ -21,7 +21,9 @@
             <span>Publicaciones</span>
         </a>
     </div>
-    <div>
-        <img src="https://desarrolloweb.s3.amazonaws.com/tonocastrom/5.png" alt="">
+    <div class="myposts">
+        @for(myposts of this._userService.myData.posts; track myposts){
+        <img [src]="myposts.image" alt="">
+        }
     </div>
 </div>
