@@ -5,12 +5,14 @@ import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import { GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+
 
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [GoogleSigninButtonModule],
+  imports: [GoogleSigninButtonModule,],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   providers: [
@@ -38,7 +40,8 @@ export class LoginComponent {
 
   constructor(private _socialAuthService: SocialAuthService,
     public _authService: AuthService,
-    public _router: Router) { }
+    public _router: Router,
+    private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this._authService.loadStorage();
@@ -49,6 +52,7 @@ export class LoginComponent {
       this._router.navigate([redirect]);
     }
     this._socialAuthService.authState.subscribe((user) => {
+      this.spinner.show();
       this.user = user;
 
       this._authService.info_token(this.user.idToken).subscribe(inftoken => {
@@ -66,6 +70,9 @@ export class LoginComponent {
               this._router.navigate(['register']);
             }
 
+          })
+          .finally(()=>{
+            this.spinner.hide();
           });
       })
 
@@ -80,7 +87,7 @@ export class LoginComponent {
   }
 
   signInInstaFake() {
-
+    console.log("login");
   }
 
   signInWithGoogle(): void {
