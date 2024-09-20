@@ -3,6 +3,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PostService } from '../../services/post.service';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-newpost',
@@ -30,10 +31,12 @@ export class NewpostComponent {
   constructor(
     private sanitizer: DomSanitizer,
     private postService: PostService,
-    private router: Router
+    private router: Router,
+    private spinner:NgxSpinnerService
   ) { }
 
   onSubmit(form: NgForm) {
+    this.spinner.show();
     console.log('Your form data:', form.value);
 
     var base64Index = this.post.imageB64.indexOf(';base64,') + ';base64,'.length;
@@ -43,6 +46,7 @@ export class NewpostComponent {
     this.newFile.contenido = base64;
 
     this.postService.savePost(this.newFile, form.value.comment).then(() => {
+      this.spinner.hide();
       this.router.navigate(["/profile"])
     })
 

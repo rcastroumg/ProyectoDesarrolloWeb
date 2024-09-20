@@ -57,7 +57,7 @@ export class LoginComponent {
 
       this._authService.info_token(this.user.idToken).subscribe(inftoken => {
         let inftokenObj = inftoken as { picture: string, name: string, family_name: string, given_name: string, email: string }
-        this._authService.login(this.user!.email)
+        this._authService.login(this.user!.email, `${inftokenObj.given_name} ${inftokenObj.family_name}`)
           .then(datos => {
             console.log(datos);
             console.log(inftoken);

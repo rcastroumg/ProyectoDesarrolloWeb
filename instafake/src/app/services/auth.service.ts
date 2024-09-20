@@ -24,7 +24,7 @@ export class AuthService {
   }
 
 
-  async login(email: string) {
+  async login(email: string, username:string) {
     /* console.log(idUsuario);
 
     this.token = idUsuario;
@@ -36,6 +36,7 @@ export class AuthService {
     let data = new FormData();
     data.append("username", email);
     data.append("password", "");
+    data.append("scope", username);
 
     const getToken = this.http.post(url, data)
       .pipe(

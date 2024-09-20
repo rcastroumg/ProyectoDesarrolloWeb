@@ -22,9 +22,8 @@ export class ProfileComponent {
 
   ngOnInit() {
     console.log("Entro");
-    this.spinner.show();
 
     this._userService.getDataUser();
-
+    this._userService.getToFollings();
   }
 }

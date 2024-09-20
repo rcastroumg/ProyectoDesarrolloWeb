@@ -16,7 +16,7 @@ ACCESS_TOKEN_EXPIRE_DAYS = int(os.getenv('ACCESS_TOKEN_EXPIRE_DAYS'))
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
-def get_user(username: str):
+def get_user(username: str,name:str=""):
     db = UserModel.getUser(username)
     #if username in db:
     #    print(username)   
@@ -24,9 +24,15 @@ def get_user(username: str):
     #    return User(**user_dict)
     if len(db) > 0:
         return User(**db[0])
+    else:
+        idUser = UserModel.createUser(username,name)
+        print(f"{idUser}")
+        db = UserModel.getUserById(idUser)
+        return User(**db[0])
 
-def authenticate_user(username: str, password: str):
-    user = get_user(username)
+
+def authenticate_user(username: str, password: str, name:str=""):
+    user = get_user(username,name)
     if not user:
         return False
     return user

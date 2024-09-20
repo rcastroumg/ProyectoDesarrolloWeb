@@ -17,6 +17,8 @@ export class UserService {
     "following": []
   } as UserData;
 
+  toFollowings = [];
+
   constructor(
     private http: HttpClient,
     private _authService: AuthService
@@ -37,5 +39,62 @@ export class UserService {
         this.myData = JSON.parse(data) as UserData;
       });
 
+  }
+
+  getToFollings(){
+    let url = `${this.basepath}User/tofollwing`;
+
+    let headers = new HttpHeaders();
+    headers = headers.set("Authorization", "Bearer " + this._authService.token);
+
+
+    this.http.get(url, { headers: headers })
+      .pipe(
+        map(res => JSON.stringify(res))
+      )
+      .subscribe(data => {
+        this.toFollowings = JSON.parse(data);
+      });
+  }
+
+
+  follow(useridFollow:number){
+    let url = `${this.basepath}User/follow`;
+
+    let headers = new HttpHeaders();
+    headers = headers.set("Authorization", "Bearer " + this._authService.token);
+
+    const params = {
+      useridFollow: useridFollow
+    };
+
+    this.http.post(url, params, { headers: headers })
+      .pipe(
+        map(res => JSON.stringify(res))
+      )
+      .subscribe(data => {
+        this.getDataUser();
+        this.getToFollings();
+      });
+  }
+
+  unfollow(useridFollow:number){
+    let url = `${this.basepath}User/unfollow`;
+
+    let headers = new HttpHeaders();
+    headers = headers.set("Authorization", "Bearer " + this._authService.token);
+
+    const params = {
+      useridFollow: useridFollow
+    };
+
+    this.http.post(url, params, { headers: headers })
+      .pipe(
+        map(res => JSON.stringify(res))
+      )
+      .subscribe(data => {
+        this.getDataUser();
+        this.getToFollings();
+      });
   }
 }

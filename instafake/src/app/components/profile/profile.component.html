@@ -9,12 +9,88 @@
             <div class="email">{{this._authService.perfil.email}}</div>
             <div class="infoData">
                 <div>{{this._userService.myData.posts.length}} Publicaciones</div>
-                <div>{{this._userService.myData.followers.length}} Seguidores</div>
-                <div>{{this._userService.myData.following.length}} Seguidos</div>
+                <div data-bs-toggle="modal" data-bs-target="#followersModal">{{this._userService.myData.followers.length}} Seguidores</div>
+                <div data-bs-toggle="modal" data-bs-target="#followingsModal">{{this._userService.myData.following.length}} Seguidos</div>
             </div>
             <div class="username">{{this._authService.perfil.nombre_completo}}</div>
         </div>
     </header>
+    
+    <!-- Followers Modal -->
+    <div class="modal fade modal-dialog modal-dialog-centered" id="followersModal" tabindex="-1" aria-labelledby="followersModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5" id="followersModalLabel">Seguidores</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group list-group-flush">
+                        @for(follower of this._userService.myData.followers; track follower){
+                            <li class="list-group-item">{{follower.username}}</li>
+                        }
+                      </ul>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Following Modal -->
+    <div class="modal fade modal-dialog modal-dialog-centered" id="followingsModal" tabindex="-1" aria-labelledby="followingsModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5" id="followingsModalLabel">Siguiendo</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">                    
+
+                    <!-- Tabs navs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                          <a class="nav-link active" id="simple-tab-0" data-bs-toggle="tab" href="#simple-tabpanel-0" role="tab" aria-controls="simple-tabpanel-0" aria-selected="true">Siguiendo</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <a class="nav-link" id="simple-tab-1" data-bs-toggle="tab" href="#simple-tabpanel-1" role="tab" aria-controls="simple-tabpanel-1" aria-selected="false">Seguir</a>
+                        </li>
+                      </ul>
+                      <div class="tab-content pt-5" id="tab-content" style="padding-top: 1rem !important;">
+                        <div class="tab-pane active" id="simple-tabpanel-0" role="tabpanel" aria-labelledby="simple-tab-0">
+                            <ul class="list-group list-group-flush">
+                                @for(following of this._userService.myData.following; track following){
+                                    <li class="list-group-item" style="display: flex; justify-content: space-between;">
+                                        {{following.username}}
+                                        <button type="button" class="btn btn-primary btn-sm" (click)="this._userService.unfollow(following.following_id)">Dejar de seguir</button>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="tab-pane" id="simple-tabpanel-1" role="tabpanel" aria-labelledby="simple-tab-1">
+                            <ul class="list-group list-group-flush">
+                                @for(tofollowing of this._userService.toFollowings; track tofollowing){
+                                    <li class="list-group-item" style="display: flex; justify-content: space-between;">
+                                        {{tofollowing["username"]}}
+                                        <button type="button" class="btn btn-primary btn-sm" (click)="this._userService.follow(8)">Seguir</button>
+                                    </li>
+                                }
+                            </ul>
+                        </div>                        
+                      </div>
+                    <!-- Tabs content -->
+
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="options">
         <a href="/profile">
             <i class="fas fa-th"></i>
@@ -28,3 +104,5 @@
     </div>
 </div>
 <ngx-spinner type="ball-scale-multiple"></ngx-spinner>
+
+
