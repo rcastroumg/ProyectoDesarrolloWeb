@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, lastValueFrom, map, of } from 'rxjs';
 import { url_services } from '../config/url.services';
 import { AuthService } from './auth.service';
-import { UserData } from '../interfaces/UserData';
+import { ToFollow, UserData } from '../interfaces/UserData';
 
 @Injectable({
   providedIn: 'root'
@@ -17,48 +17,61 @@ export class UserService {
     "following": []
   } as UserData;
 
-  toFollowings = [];
+  toFollowings = [] as Array<ToFollow>;
 
   constructor(
     private http: HttpClient,
-    private _authService: AuthService
-  ) { }
+    private _authService: AuthService,
+  ) {
+    this.getStorageUserData();
+  }
 
-  getDataUser() {
+  getStorageUserData() {
+    this.myData = this._authService.getUserData();
+  }
+
+  setStorageUserData() {
+    this._authService.setUserData(this.myData);
+  }
+
+  async getDataUser() {
     let url = `${this.basepath}User/mydata`;
 
     let headers = new HttpHeaders();
     headers = headers.set("Authorization", "Bearer " + this._authService.token);
 
 
-    this.http.get(url, { headers: headers })
+    const retDataUser = this.http.get(url, { headers: headers })
       .pipe(
         map(res => JSON.stringify(res))
-      )
-      .subscribe(data => {
-        this.myData = JSON.parse(data) as UserData;
-      });
+      );
+
+    await lastValueFrom(retDataUser).then(data => {
+      this.myData = JSON.parse(data) as UserData;
+      this.setStorageUserData();
+    });
 
   }
 
-  getToFollings(){
+  async getToFollings() {
     let url = `${this.basepath}User/tofollwing`;
 
     let headers = new HttpHeaders();
     headers = headers.set("Authorization", "Bearer " + this._authService.token);
 
 
-    this.http.get(url, { headers: headers })
+    const retToFollowings = this.http.get(url, { headers: headers })
       .pipe(
         map(res => JSON.stringify(res))
-      )
-      .subscribe(data => {
-        this.toFollowings = JSON.parse(data);
-      });
+      );
+
+    await lastValueFrom(retToFollowings).then(data => {
+      this.toFollowings = JSON.parse(data) as Array<ToFollow>;
+    });
   }
 
 
-  follow(useridFollow:number){
+  async follow(useridFollow: number) {
     let url = `${this.basepath}User/follow`;
 
     let headers = new HttpHeaders();
@@ -68,17 +81,18 @@ export class UserService {
       useridFollow: useridFollow
     };
 
-    this.http.post(url, params, { headers: headers })
+    const retFollow = this.http.post(url, params, { headers: headers })
       .pipe(
         map(res => JSON.stringify(res))
-      )
-      .subscribe(data => {
-        this.getDataUser();
-        this.getToFollings();
-      });
+      );
+
+    await lastValueFrom(retFollow).then(async data => {
+      await this.getDataUser();
+      await this.getToFollings();
+    });
   }
 
-  unfollow(useridFollow:number){
+  async unfollow(useridFollow: number) {
     let url = `${this.basepath}User/unfollow`;
 
     let headers = new HttpHeaders();
@@ -88,13 +102,14 @@ export class UserService {
       useridFollow: useridFollow
     };
 
-    this.http.post(url, params, { headers: headers })
+    const retFollow = this.http.post(url, params, { headers: headers })
       .pipe(
         map(res => JSON.stringify(res))
-      )
-      .subscribe(data => {
-        this.getDataUser();
-        this.getToFollings();
-      });
+      );
+
+    await lastValueFrom(retFollow).then(async data => {
+      await this.getDataUser();
+      await this.getToFollings();
+    });
   }
 }

@@ -10,10 +10,11 @@ class UserModel:
     
 
     def getUserById(id):
+        print("user model")
         query = f"Select id, username, email from Users where id = '{id}'"
 
         ret = MySqldb().execute_query(query)
-
+        print(ret)
         return ret
     
 

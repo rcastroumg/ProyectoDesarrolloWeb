@@ -34,3 +34,8 @@ values
         query = f"select * from Files order by created_at desc limit 1"
         ret = MySqldb().execute_query(query)
         return ret
+    
+    def getFileId(fileId):
+        query = f"select * from Files where id = {fileId}"
+        ret = MySqldb().execute_query(query)
+        return ret[0]

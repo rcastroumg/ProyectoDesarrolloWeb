@@ -11,7 +11,9 @@
             <input type="file" class="form-control" id="imageFile" name="imageFile" [(ngModel)]="post.imageFile"
                 (change)="catchFile($event)" required="">
         </div>
-        <img width="300px" [src]="post.imageB64" alt="">
+        <div class="p-img">
+            <img class="preview" [src]="post.imageB64" alt="">
+        </div>
         <div class="col-12">
             <button type="submit" class="btn btn-primary" [disabled]="myform.invalid">Publicar</button>
         </div>

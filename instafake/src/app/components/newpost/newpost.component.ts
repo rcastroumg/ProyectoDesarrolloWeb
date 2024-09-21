@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PostService } from '../../services/post.service';
@@ -10,7 +10,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
   standalone: true,
   imports: [FormsModule],
   templateUrl: './newpost.component.html',
-  styleUrl: './newpost.component.scss'
+  styleUrl: './newpost.component.scss',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class NewpostComponent {
 
@@ -32,7 +33,7 @@ export class NewpostComponent {
     private sanitizer: DomSanitizer,
     private postService: PostService,
     private router: Router,
-    private spinner:NgxSpinnerService
+    private spinner: NgxSpinnerService
   ) { }
 
   onSubmit(form: NgForm) {

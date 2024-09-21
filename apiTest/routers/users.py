@@ -63,10 +63,11 @@ async def read_users_me(current_user: User = Depends(get_current_user)):
 
 @router.post("/follow")
 async def read_users_me(useridFollow:follow, current_user: User = Depends(get_current_user)):
-    ret = UserModel.follow(current_user.id, useridFollow)
+    print(useridFollow)
+    ret = UserModel.follow(current_user.id, useridFollow.useridFollow)
     return ret
 
 @router.post("/unfollow")
 async def read_users_me(useridFollow:follow, current_user: User = Depends(get_current_user)):
-    ret = UserModel.unfollow(current_user.id, useridFollow)
+    ret = UserModel.unfollow(current_user.id, useridFollow.useridFollow)
     return ret

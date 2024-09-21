@@ -1,8 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, lastValueFrom, map, of } from 'rxjs';
+import { Observable, catchError, lastValueFrom, map, of, BehaviorSubject } from 'rxjs';
 import { url_services } from '../config/url.services';
 import { Perfil } from '../config/perfil.config';
+import { UserData } from '../interfaces/UserData';
 
 @Injectable({
   providedIn: 'root'
@@ -15,16 +16,29 @@ export class AuthService {
   loggedId: boolean = false;
   redirectUrl: string = "";
 
+
+
   constructor(
     public http: HttpClient,
-  ) { }
+  ) {
+  }
+
+  getUserData() {
+    let userData: UserData = { "posts": [], "followers": [], "following": [] };
+    if (localStorage.getItem('userData')) { userData = JSON.parse(localStorage.getItem('userData')!) as UserData; }
+    return userData;
+  }
+
+  setUserData(_userData: UserData) {
+    localStorage.setItem('userData', JSON.stringify(_userData));
+  }
 
   isAuth() {
     return this.token.length > 0;
   }
 
 
-  async login(email: string, username:string) {
+  async login(email: string, username: string) {
     /* console.log(idUsuario);
 
     this.token = idUsuario;
@@ -67,7 +81,7 @@ export class AuthService {
       let myuser = JSON.parse(resp) as { id: number, username: string, email: string, profile_picture: string }
       user = myuser;
       console.log(user);
-      
+
     });
 
     return [this.token, user];
