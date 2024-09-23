@@ -29,7 +29,7 @@
                 </div>
                 <div class="modal-body">
                     <ul class="list-group list-group-flush">
-                        @for(follower of this._userService.myData.followers; track follower){
+                        @for(follower of this._userService.myData.followers; track follower.follower_id){
                         <li class="list-group-item">{{follower.username}}</li>
                         }
                     </ul>
@@ -68,7 +68,7 @@
                         <div class="tab-pane active" id="simple-tabpanel-0" role="tabpanel"
                             aria-labelledby="simple-tab-0">
                             <ul class="list-group list-group-flush">
-                                @for(following of this._userService.myData.following; track following){
+                                @for(following of this._userService.myData.following; track following.following_id){
                                 <li class="list-group-item" style="display: flex; justify-content: space-between;">
                                     {{following.username}}
                                     <button type="button" class="btn btn-primary btn-sm"
@@ -80,7 +80,7 @@
                         </div>
                         <div class="tab-pane" id="simple-tabpanel-1" role="tabpanel" aria-labelledby="simple-tab-1">
                             <ul class="list-group list-group-flush">
-                                @for(tofollowing of this._userService.toFollowings; track tofollowing){
+                                @for(tofollowing of this._userService.toFollowings; track tofollowing.id){
                                 <li class="list-group-item" style="display: flex; justify-content: space-between;">
                                     {{tofollowing.username}}
                                     <button type="button" class="btn btn-primary btn-sm"
