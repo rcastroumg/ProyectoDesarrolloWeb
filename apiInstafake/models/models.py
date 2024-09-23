@@ -3,9 +3,9 @@ from pydantic import BaseModel
 # Modelo de datos para usuario
 class User(BaseModel):
     username: str
-    full_name: str | None = None
-    email: str | None = None
-    disabled: bool | None = None
+    full_name: str
+    email: str
+    disabled: bool
 
 class UserInDB(User):
     hashed_password: str
