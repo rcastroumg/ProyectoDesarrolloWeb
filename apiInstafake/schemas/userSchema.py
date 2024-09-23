@@ -4,7 +4,7 @@ class User(BaseModel):
     id: int
     username: str
     email: str
-    profile_picture: str | None = None
+    profile_picture: str
 
 
 class Token(BaseModel):
