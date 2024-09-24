@@ -22,3 +22,15 @@ values
         ret = MySqldb().execute_insert(query,params=params)
         
         return ret
+    
+
+    def obtenerTodosPosts():
+        query = f"""
+select a.user_id, b.username, a.id, a.image, a.caption 
+from Posts a
+join Users b on a.user_id = b.id
+order by a.created_at desc
+"""
+        ret = MySqldb().execute_query(query)
+        return ret
+    
