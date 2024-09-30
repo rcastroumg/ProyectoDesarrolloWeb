@@ -27,5 +27,5 @@ async def saveFile(model:GuardarArchivo,current_user: User = Depends(get_current
 
         IDArchivo = DgUtil.guardarArcihvo(NombreArchivo=model.NombreArchivo, TipoContenido=model.TipoContenido, Contenido=content, Usuario=current_user)
         return IDArchivo
-    except:
-        return HTTPException(status.HTTP_400_BAD_REQUEST,detail="No se pudo guardar el archivo")
+    except Exception as ex:
+        return HTTPException(status.HTTP_400_BAD_REQUEST,detail=f"No se pudo guardar el archivo: {ex}")
