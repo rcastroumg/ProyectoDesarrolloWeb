@@ -59,9 +59,9 @@ class DgUtil:
             IDArchivo = FilesModel.guardarArchivo(model)
             
             # Arma la ruta final segun sistema operativo o almacenamiento
-            guardar = DgUtil.guardarArchivoFisico(IDArchivo,ruta,extencion_archivo,Contenido)
+            [guardar,mensaje] = DgUtil.guardarArchivoFisico(IDArchivo,ruta,extencion_archivo,Contenido)
             if(guardar == False):
-                raise Exception("Error al guardar archivo")              
+                raise Exception(f"Error al guardar archivo: {mensaje}")              
 
             return IDArchivo
         except Exception as err:
@@ -102,7 +102,7 @@ class DgUtil:
                 ) 
                 print(document)
             
-            return True
+            return [True,""]
         except Exception as ex:
             print(ex)
-            return False
+            return [False,str(ex)]
