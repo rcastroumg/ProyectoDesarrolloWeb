@@ -50,3 +50,9 @@ async def savePost(model:GuardarPosts,userid:int):
         return IDPost
     except Exception as ex:
         return HTTPException(status.HTTP_400_BAD_REQUEST,detail=f"No se pudo guardar el archivo: {ex}")
+    
+
+# hacer un get de todos los posts
+@router.get("/all")
+async def getAllPosts(current_user: User = Depends(get_current_user)):
+    return PostsModel.obtenerTodosPosts(current_user.id)

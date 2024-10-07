@@ -24,11 +24,12 @@ values
         return ret
     
 
-    def obtenerTodosPosts():
+    def obtenerTodosPosts(userid):
         query = f"""
 select a.user_id, b.username, a.id, a.image, a.caption 
 from Posts a
-join Users b on a.user_id = b.id
+join Users b on a.user_id = b.id 
+where a.user_id in (select following_id from Followers where follower_id = {userid})
 order by a.created_at desc
 """
         ret = MySqldb().execute_query(query)
