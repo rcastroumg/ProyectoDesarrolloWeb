@@ -54,4 +54,22 @@ export class PostService {
       error = data;
     });
   }
+
+
+  async getPots() {
+    let url = `${this.basepath}Posts/all`;
+
+    let headers = new HttpHeaders();
+    headers = headers.set("Authorization", "Bearer " + this._authService.token); 
+
+    const postsPromise = this.http.get(url, { headers: headers })
+    .pipe(
+      map(res => JSON.parse(JSON.stringify(res)))
+    );
+
+    return await lastValueFrom(postsPromise).catch(error => {
+      console.log(error);
+    });
+  }
+    
 }
