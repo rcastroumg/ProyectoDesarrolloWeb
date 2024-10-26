@@ -1,26 +1,26 @@
 import { Component } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PostService } from '../../services/post.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [CommonModule], 
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrls: ['./home.component.scss'] 
 })
 export class HomeComponent {
-
-  posts:any = [];
+  posts: any = [];
 
   constructor(
-    public _postService:PostService,
-    public spinner:NgxSpinnerService
-  ){}
+    public _postService: PostService,
+    public spinner: NgxSpinnerService
+  ) {}
 
-  ngOnInit(){
+  ngOnInit() {
     this.spinner.show();
-    this._postService.getPots().then( data => {
+    this._postService.getPots().then(data => {
       this.spinner.hide();
       this.posts = data;
       console.log(this.posts);
